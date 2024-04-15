@@ -4,6 +4,7 @@
     isNormalUser = true;
     description = "Suchir Kavi";
     extraGroups = ["networkmanager" "wheel"];
+    shell = pkgs.nushell;
   };
 
   # Select internationalisation properties.
@@ -35,6 +36,8 @@
     vim
     wget
   ];
+
+  environment.shells = with pkgs; [nushellFull fish];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
