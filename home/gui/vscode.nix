@@ -2,6 +2,8 @@
   home.packages = with pkgs; [
     alejandra
     nil
+    # can't seem to get this one to work for options.
+    nixd
   ];
 
   programs = {
@@ -17,6 +19,10 @@
         "nix.serverSettings" = {
           "nil" = {
             "formatting"."command" = ["alejandra"];
+            "nix"."flake"."autoEvalInputs" = true;
+          };
+          "nixd" = {
+            "formatting"."command" = "alejandra";
           };
         };
       };
