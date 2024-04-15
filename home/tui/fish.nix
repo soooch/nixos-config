@@ -8,6 +8,12 @@
           nix-your-shell fish | source
         end
       '';
+      plugins = [
+        {
+          name = "fzf.fish";
+          src = pkgs.fishPlugins.fzf-fish.src;
+        }
+      ];
     };
   };
 }

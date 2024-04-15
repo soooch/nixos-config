@@ -3,7 +3,8 @@
     fzf = {
       enable = true;
       enableBashIntegration = true;
-      enableFishIntegration = true;
+      # we use a fish extension instead of the official integrations
+      #enableFishIntegration = true;
     };
   };
 }
