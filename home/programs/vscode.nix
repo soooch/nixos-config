@@ -10,9 +10,15 @@
 
       userSettings = {
         "editor.formatOnSave" = true;
+
         "nix.enableLanguageServer" = true;
         "nix.formatterPath" = "alejandra";
         "nix.serverPath" = "nil";
+        "nix.serverSettings" = {
+          "nil" = {
+            "formatting"."command" = ["alejandra"];
+          };
+        };
       };
 
       extensions = with pkgs.vscode-extensions; [
