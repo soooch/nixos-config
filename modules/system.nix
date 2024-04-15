@@ -4,7 +4,9 @@
     isNormalUser = true;
     description = "Suchir Kavi";
     extraGroups = ["networkmanager" "wheel"];
-    shell = pkgs.nushell;
+    shell = pkgs.fish;
+    # we've added fish to environment.shells below.
+    ignoreShellProgramCheck = true;
   };
 
   # Select internationalisation properties.
