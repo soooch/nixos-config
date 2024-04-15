@@ -9,7 +9,7 @@
 
       # extensions not supported for proprietary google-chrome
       # extensions = [
-        # {id = "";}  // extension id, query from chrome web store
+      # {id = "";}  // extension id, query from chrome web store
       # ];
     };
   };

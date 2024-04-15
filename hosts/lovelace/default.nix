@@ -1,13 +1,15 @@
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ../../modules/system.nix
-      ../../modules/nvidia.nix
-      ../../modules/ssd.nix
-      ./hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ../../modules/system.nix
+    ../../modules/nvidia.nix
+    ../../modules/ssd.nix
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
