@@ -10,6 +10,7 @@
     fd
 
     # C, C++
+    clang
     cmake
     lldb
 
@@ -22,7 +23,10 @@
     (python3.withPackages (p: with p; [numpy pandas torch]))
 
     # Rust
-    cargo
-    rustfmt
+    (rust-bin.selectLatestNightlyWith
+      (toolchain:
+        toolchain.default.override {
+          extensions = ["rust-src" "miri"];
+        }))
   ];
 }

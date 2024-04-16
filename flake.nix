@@ -11,12 +11,14 @@
       url = "github:nix-community/nixvim/nixos-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    rust-overlay,
     ...
   } @ inputs: {
     nixosConfigurations.lovelace = nixpkgs.lib.nixosSystem {
@@ -30,6 +32,9 @@
 
           home-manager.extraSpecialArgs = inputs;
           home-manager.users.soooch = import ./home;
+        }
+        {
+          nixpkgs.overlays = [rust-overlay.overlays.default];
         }
       ];
     };
