@@ -12,6 +12,7 @@
 
       userSettings = {
         "editor.formatOnSave" = true;
+        "editor.inlayHints.enabled" = "offUnlessPressed";
 
         "nix.enableLanguageServer" = true;
         "nix.formatterPath" = "alejandra";
@@ -24,6 +25,16 @@
           "nixd" = {
             "formatting"."command" = "alejandra";
           };
+        };
+
+        "rust-analyzer"."inlayHints" = {
+          "bindingModeHints"."enable" = true;
+          "closureCaptureHints"."enable" = true;
+          "expressionAdjustmentHints"."enable" = "always";
+          "lifetimeElisionHints"."enable" = "always";
+          "rangeExclusiveHints"."enable" = true;
+          "discriminantHints"."enable" = "always";
+          "implicitDrops"."enable" = true;
         };
       };
 
