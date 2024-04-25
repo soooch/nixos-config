@@ -14,4 +14,6 @@
     open = false;
     nvidiaSettings = true;
   };
+
+  virtualisation.docker.enableNvidia = true;
 }

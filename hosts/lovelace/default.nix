@@ -4,6 +4,7 @@
     ../../modules/system.nix
     ../../modules/nvidia.nix
     ../../modules/ssd.nix
+    ../../modules/docker.nix
     ./hardware-configuration.nix
   ];
 
