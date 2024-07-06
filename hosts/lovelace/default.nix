@@ -12,6 +12,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # disable integrated amd gpu (interfering with nvidia)
+  boot.kernelParams = ["module_blacklist=amdgpu"];
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
