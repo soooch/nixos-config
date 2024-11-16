@@ -17,6 +17,7 @@
 
     # Nix
     alejandra
+    cachix
     deadnix
     statix
 
