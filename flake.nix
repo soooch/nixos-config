@@ -11,6 +11,7 @@
       url = "github:nix-community/nixvim/nixos-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ghostty.url = "git+ssh://git@github.com/ghostty-org/ghostty";
     rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
