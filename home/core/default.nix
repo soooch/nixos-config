@@ -8,6 +8,7 @@
     # Utils
     bat
     fd
+    wl-clipboard
 
     # C, C++
     clang
