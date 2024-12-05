@@ -8,10 +8,9 @@ in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.nvidia.acceptLicense = true;
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
     package = driverPkg;
     extraPackages = with pkgs; [vaapiVdpau];
   };
