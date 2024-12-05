@@ -4,6 +4,9 @@
       enable = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
+      settings = {
+        theme = "ansi";
+      };
     };
   };
   # nushell integrations
