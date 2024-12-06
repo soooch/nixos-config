@@ -10,6 +10,11 @@
     fd
     wl-clipboard
 
+    # Audio
+    easyeffects
+    helvum
+    pwvucontrol
+
     # C, C++
     clang
     cmake
