@@ -5,6 +5,7 @@
     ../../modules/gnome.nix
     ../../modules/nvidia.nix
     ../../modules/ssd.nix
+    ../../modules/logitech.nix
     ../../modules/docker.nix
     ./hardware-configuration.nix
   ];
