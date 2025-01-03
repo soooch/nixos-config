@@ -2,8 +2,8 @@
   programs = {
     zellij = {
       enable = true;
-      enableBashIntegration = true;
-      enableFishIntegration = true;
+      enableBashIntegration = false;
+      enableFishIntegration = false;
       settings = {
         theme = "ansi";
       };
