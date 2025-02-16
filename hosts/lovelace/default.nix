@@ -3,7 +3,7 @@
     # Include the results of the hardware scan.
     ../../modules/system.nix
     ../../modules/gnome.nix
-    ../../modules/nvidia.nix
+    ../../modules/gpu/amd.nix
     ../../modules/ssd.nix
     ../../modules/logitech.nix
     ../../modules/docker.nix
@@ -14,8 +14,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # disable integrated amd gpu (interfering with nvidia)
-  boot.kernelParams = ["module_blacklist=amdgpu"];
+  # disable disabling amdgpu (using amd gpu)
+  # # disable integrated amd gpu (interfering with nvidia)
+  # boot.kernelParams = ["module_blacklist=amdgpu"];
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
