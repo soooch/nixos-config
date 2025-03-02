@@ -43,7 +43,7 @@
         jnoortheen.nix-ide
         arrterian.nix-env-selector
         github.copilot
-	bazelbuild.vscode-bazel
+        bazelbuild.vscode-bazel
       ];
     };
   };
