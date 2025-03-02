@@ -22,4 +22,12 @@
   environment.variables = {
     ROC_ENABLE_PRE_VEGA = "1";
   };
+
+  boot.kernelPatches = [
+    {
+      # https://lore.kernel.org/all/2025022644-blinked-broadness-c810@gregkh/
+      name = "revert cve fix which broke chromium rendering for amdgpu";
+      patch = ./0001-Revert-libfs-Use-d_children-list-to-iterate-simple_o.patch;
+    }
+  ];
 }

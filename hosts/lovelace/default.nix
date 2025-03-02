@@ -3,7 +3,7 @@
     # Include the results of the hardware scan.
     ../../modules/system.nix
     ../../modules/gnome.nix
-    ../../modules/gpu/amd.nix
+    ../../modules/gpu/amd/default.nix
     ../../modules/ssd.nix
     ../../modules/logitech.nix
     ../../modules/docker.nix
