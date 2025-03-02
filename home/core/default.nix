@@ -35,5 +35,8 @@
         toolchain.default.override {
           extensions = ["rust-src" "miri"];
         }))
+
+    # Bazel
+    buildifier
   ];
 }
