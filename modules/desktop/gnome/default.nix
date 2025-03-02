@@ -12,11 +12,7 @@
 
   environment.gnome.excludePackages = [pkgs.gnome-console];
   environment.systemPackages = let
-    vte-osc52-patch = pkgs.fetchpatch {
-      name = "0002-Add-support-for-OSC52-writes.patch";
-      url = "https://github.com/soooch/vte/commit/fcdd1657b10de0f2af31d849a57a9f568c983e86.patch";
-      hash = "sha256-goCS+hgqDZO81L+AAllydXUifzAclgRbf66qTXlzwWI=";
-    };
+    vte-osc52-patch = ./0001-terminal-Add-support-for-OSC52-writes.patch;
     vte-gtk4-osc52 = pkgs.vte-gtk4.overrideAttrs (final: prev: {
       patches = prev.patches ++ [vte-osc52-patch];
     });

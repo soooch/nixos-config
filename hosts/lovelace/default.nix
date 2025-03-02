@@ -2,7 +2,7 @@
   imports = [
     # Include the results of the hardware scan.
     ../../modules/system.nix
-    ../../modules/gnome.nix
+    ../../modules/desktop/gnome/default.nix
     ../../modules/gpu/amd/default.nix
     ../../modules/ssd.nix
     ../../modules/logitech.nix

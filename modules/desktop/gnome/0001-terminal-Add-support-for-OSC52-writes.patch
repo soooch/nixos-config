@@ -1,0 +1,125 @@
+From fcdd1657b10de0f2af31d849a57a9f568c983e86 Mon Sep 17 00:00:00 2001
+From: Suchir Kavi <suchirkavi@gmail.com>
+Date: Thu, 5 Dec 2024 01:48:20 -0800
+Subject: [PATCH] terminal: Add support for OSC52 writes
+
+---
+ src/vteinternal.hh |  3 +++
+ src/vteseq.cc      | 66 +++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 68 insertions(+), 1 deletion(-)
+
+diff --git a/src/vteinternal.hh b/src/vteinternal.hh
+index 051e78c8..8f7766be 100644
+--- a/src/vteinternal.hh
++++ b/src/vteinternal.hh
+@@ -1797,6 +1797,9 @@ public:
+         void vte_termprop(vte::parser::Sequence const& seq,
+                           vte::parser::StringTokeniser::const_iterator& token,
+                           vte::parser::StringTokeniser::const_iterator const& endtoken) noexcept;
++        void set_xselection(vte::parser::Sequence const& seq,
++                            vte::parser::StringTokeniser::const_iterator& token,
++                            vte::parser::StringTokeniser::const_iterator const& endtoken) noexcept;
+ 
+         void urxvt_extension(vte::parser::Sequence const& seq,
+                              vte::parser::StringTokeniser::const_iterator& token,
+diff --git a/src/vteseq.cc b/src/vteseq.cc
+index 5539ed64..5b1867b9 100644
+--- a/src/vteseq.cc
++++ b/src/vteseq.cc
+@@ -35,6 +35,7 @@
+ #include "caps.hh"
+ #include "debug.h"
+ #include "sgr.hh"
++#include "widget.hh"
+ 
+ #define BEL_C0 "\007"
+ #define ST_C0 _VTE_CAP_ST
+@@ -2258,6 +2259,66 @@ Terminal::collect_rect(vte::parser::Sequence const& seq,
+         return rect;
+ }
+ 
++void
++Terminal::set_xselection(vte::parser::Sequence const& seq,
++                         vte::parser::StringTokeniser::const_iterator& token,
++                         vte::parser::StringTokeniser::const_iterator const& endtoken) noexcept
++{
++        // Pt -> Pc ; Pd
++        // Pc -> { c  p  s  0  1  2  3  4  5  6  7 }*
++        // Pd -> <base64 data> | ?
++        // https://www.xfree86.org/current/ctlseqs.html
++
++        if (std::distance(token, endtoken) != 2)
++                return;
++
++        std::string pc(*token);
++
++        // xterm treats an empty Pc as s 0
++        if (pc.empty()) {
++                pc = "s0";
++        }
++
++        const std::string pd(*++token);
++
++        // not supporting reads
++        if (pd == "?")
++                return;
++        
++        platform::ClipboardType selection = platform::ClipboardType::CLIPBOARD;
++
++        switch(pc.front()) {
++        case 'c':
++                selection = platform::ClipboardType::CLIPBOARD;
++                break;
++        case 'p':
++                selection = platform::ClipboardType::PRIMARY;
++                break;
++        // s is intended to be configurable as either clipboard or primary.
++        // we will treat it as clipboard.
++        case 's':
++                selection = platform::ClipboardType::CLIPBOARD;
++                break;
++        // not supporting cut buffers
++        case '0' ... '7':
++                return;
++        default:
++                return;
++        }
++
++        gsize decoded_len;
++        const auto decoded = g_base64_decode(pd.c_str(), &decoded_len);
++
++        if (!decoded)
++                return;
++
++        widget()->clipboard_set_text(selection,
++                                        reinterpret_cast<char const *>(decoded),
++                                        decoded_len);
++
++        g_free(decoded);
++}
++
+ /*
+  * Command Handlers
+  * This is the unofficial documentation of all the VTE_CMD_* definitions.
+@@ -7555,6 +7616,10 @@ Terminal::OSC(vte::parser::Sequence const& seq)
+                 urxvt_extension(seq, it, cend);
+                 break;
+ 
++        case VTE_OSC_XTERM_SET_XSELECTION:
++                set_xselection(seq, it, cend);
++                break;
++
+         case VTE_OSC_XTERM_SET_ICON_TITLE:
+         case VTE_OSC_XTERM_SET_XPROPERTY:
+         case VTE_OSC_XTERM_SET_COLOR_MOUSE_CURSOR_FG:
+@@ -7565,7 +7630,6 @@ Terminal::OSC(vte::parser::Sequence const& seq)
+         case VTE_OSC_XTERM_SET_CURSOR_NAME:
+         case VTE_OSC_XTERM_LOGFILE:
+         case VTE_OSC_XTERM_SET_FONT:
+-        case VTE_OSC_XTERM_SET_XSELECTION:
+         case VTE_OSC_XTERM_SET_COLOR_MODE:
+         case VTE_OSC_XTERM_RESET_COLOR_MOUSE_CURSOR_FG:
+         case VTE_OSC_XTERM_RESET_COLOR_MOUSE_CURSOR_BG:
+-- 
+2.47.2
+
