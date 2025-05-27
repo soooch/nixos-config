@@ -1,19 +1,19 @@
-From 98fabaa710e7825053fec476dd5ee81182568678 Mon Sep 17 00:00:00 2001
+From e6acebbbf5b3753dcbee3fc8396db0c04b746869 Mon Sep 17 00:00:00 2001
 From: Suchir Kavi <suchirkavi@gmail.com>
-Date: Sun, 2 Mar 2025 03:14:15 -0800
-Subject: [PATCH] Revert "libfs: Use d_children list to iterate simple_offset
- directories"
+Date: Mon, 26 May 2025 17:42:22 -0700
+Subject: [PATCH 2/2] Revert "libfs: Use d_children list to iterate
+ simple_offset directories"
 
-This reverts commit 850e696f362729a163fb6af21a54cde565b71f75.
+This reverts commit b9b588f22a0c049a14885399e27625635ae6ef91.
 ---
- fs/libfs.c | 84 ++++++++++++++++--------------------------------------
- 1 file changed, 25 insertions(+), 59 deletions(-)
+ fs/libfs.c | 84 +++++++++++++++++-------------------------------------
+ 1 file changed, 26 insertions(+), 58 deletions(-)
 
 diff --git a/fs/libfs.c b/fs/libfs.c
-index f5566964aa7d..d546f3f0c036 100644
+index b0f262223b53..ff5a4007e59a 100644
 --- a/fs/libfs.c
 +++ b/fs/libfs.c
-@@ -241,13 +241,12 @@ EXPORT_SYMBOL(simple_dir_inode_operations);
+@@ -243,13 +243,12 @@ EXPORT_SYMBOL(simple_dir_inode_operations);
  
  /* simple_offset_add() never assigns these to a dentry */
  enum {
@@ -28,8 +28,8 @@ index f5566964aa7d..d546f3f0c036 100644
  	DIR_OFFSET_MAX		= DIR_OFFSET_EOD - 1,
  };
  
-@@ -453,84 +452,51 @@ static loff_t offset_dir_llseek(struct file *file, loff_t offset, int whence)
- 	return vfs_setpos(file, offset, U32_MAX);
+@@ -454,82 +453,51 @@ static loff_t offset_dir_llseek(struct file *file, loff_t offset, int whence)
+ 	return vfs_setpos(file, offset, LONG_MAX);
  }
  
 -static struct dentry *find_positive_dentry(struct dentry *parent,
@@ -41,12 +41,10 @@ index f5566964aa7d..d546f3f0c036 100644
 -
 -	spin_lock(&parent->d_lock);
 -	if (next)
--		dentry = list_next_entry(dentry, d_child);
+-		dentry = d_next_sibling(dentry);
 -	else if (!dentry)
--		dentry = list_first_entry_or_null(&parent->d_subdirs,
--						  struct dentry, d_child);
--	for (; dentry && !list_entry_is_head(dentry, &parent->d_subdirs, d_child);
--	     dentry = list_next_entry(dentry, d_child)) {
+-		dentry = d_first_child(parent);
+-	hlist_for_each_entry_from(dentry, d_sib) {
 -		if (!simple_positive(dentry))
 -			continue;
 -		spin_lock_nested(&dentry->d_lock, DENTRY_D_LOCK_NESTED);
@@ -65,20 +63,21 @@ index f5566964aa7d..d546f3f0c036 100644
 -{
 -	struct inode *inode = d_inode(parent);
 -	struct offset_ctx *octx = inode->i_op->get_offset_ctx(inode);
- 	struct dentry *child, *found = NULL;
+-	struct dentry *child, *found = NULL;
 -
- 	XA_STATE(xas, &octx->xa, offset);
+ 	MA_STATE(mas, &octx->mt, offset, offset);
++	struct dentry *child, *found = NULL;
  
 -	if (offset == DIR_OFFSET_FIRST)
 -		found = find_positive_dentry(parent, NULL, false);
 -	else {
 -		rcu_read_lock();
--		child = xas_next_entry(&xas, DIR_OFFSET_MAX);
+-		child = mas_find(&mas, DIR_OFFSET_MAX);
 -		found = find_positive_dentry(parent, child, false);
 -		rcu_read_unlock();
 -	}
 +	rcu_read_lock();
-+	child = xas_next_entry(&xas, DIR_OFFSET_MAX);
++	child = mas_find(&mas, DIR_OFFSET_MAX);
 +	if (!child)
 +		goto out;
 +	spin_lock(&child->d_lock);
@@ -92,8 +91,8 @@ index f5566964aa7d..d546f3f0c036 100644
  
  static bool offset_dir_emit(struct dir_context *ctx, struct dentry *dentry)
  {
-+	u32 offset = dentry2offset(dentry);
  	struct inode *inode = d_inode(dentry);
++	long offset = dentry2offset(dentry);
  
 -	return dir_emit(ctx, dentry->d_name.name, dentry->d_name.len,
 -			inode->i_ino, fs_umode_to_dtype(inode->i_mode));
@@ -136,7 +135,7 @@ index f5566964aa7d..d546f3f0c036 100644
  	return;
  
  out_eod:
-@@ -569,7 +535,7 @@ static int offset_readdir(struct file *file, struct dir_context *ctx)
+@@ -568,7 +536,7 @@ static int offset_readdir(struct file *file, struct dir_context *ctx)
  	if (!dir_emit_dots(file, ctx))
  		return 0;
  	if (ctx->pos != DIR_OFFSET_EOD)
@@ -146,5 +145,5 @@ index f5566964aa7d..d546f3f0c036 100644
  }
  
 -- 
-2.47.2
+2.49.0
 
