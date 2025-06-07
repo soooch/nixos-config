@@ -7,6 +7,7 @@
     ../../modules/ssd.nix
     ../../modules/logitech.nix
     ../../modules/docker.nix
+    ../../modules/ios.nix
     ./hardware-configuration.nix
   ];
 
