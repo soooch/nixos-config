@@ -4,7 +4,7 @@
   ...
 }: {
   # packages mentioned in our zed config
-  home.packages = with pkgs; [alejandra nodejs rust-analyzer];
+  home.packages = with pkgs; [alejandra nodejs pkgs.rust-bin.stable.latest.rust-analyzer];
 
   programs.zed-editor = {
     enable = true;
@@ -17,7 +17,7 @@
       lsp = {
         rust-analyzer = {
           binary = {
-            path = lib.getExe pkgs.rust-analyzer;
+            path = lib.getExe pkgs.rust-bin.stable.latest.rust-analyzer;
           };
         };
         nil = {
