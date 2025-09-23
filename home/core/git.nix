@@ -1,10 +1,10 @@
-{
+{vars, ...}: {
   programs = {
     git = {
       enable = true;
 
-      userName = "Suchir Kavi";
-      userEmail = "suchirkavi@gmail.com";
+      userName = vars.fullname;
+      userEmail = vars.email;
 
       difftastic.enable = true;
       extraConfig = {

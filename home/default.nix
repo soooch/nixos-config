@@ -1,4 +1,4 @@
-{
+{vars, ...}: {
   imports = [
     ./core
     ./gui
@@ -8,8 +8,8 @@
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home = {
-    username = "soooch";
-    homeDirectory = "/home/soooch";
+    username = vars.username;
+    homeDirectory = "/home/${vars.username}";
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage

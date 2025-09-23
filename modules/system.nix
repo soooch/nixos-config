@@ -1,8 +1,12 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  vars,
+  ...
+}: {
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.soooch = {
+  users.users.${vars.username} = {
     isNormalUser = true;
-    description = "Suchir Kavi";
+    description = vars.fullname;
     extraGroups = ["networkmanager" "wheel"];
     shell = pkgs.fish;
     # we've added fish to environment.shells below.
@@ -26,7 +30,7 @@
 
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
-    trusted-users = ["root" "soooch"];
+    trusted-users = ["root" vars.username];
   };
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

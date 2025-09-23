@@ -23,22 +23,56 @@
     ...
   } @ inputs: {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-    nixosConfigurations.lovelace = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./hosts/lovelace
+    nixosConfigurations = let
+      commonModules = [
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-
-          home-manager.extraSpecialArgs = inputs;
-          home-manager.users.soooch = import ./home;
         }
         {
           nixpkgs.overlays = [rust-overlay.overlays.default];
         }
       ];
+      defSystem = {
+        vars,
+        hostModule,
+      }: let
+        specialArgs = {
+          inherit inputs;
+          inherit vars;
+        };
+      in
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules =
+            [
+              hostModule
+              {
+                home-manager.extraSpecialArgs = specialArgs;
+                home-manager.users.${vars.username} = import ./home;
+              }
+            ]
+            ++ commonModules;
+          inherit specialArgs;
+        };
+    in {
+      lovelace = defSystem {
+        vars = {
+          username = "soooch";
+          fullname = "Suchir Kavi";
+          email = "suchirkavi@gmail.com";
+        };
+        hostModule = ./hosts/lovelace;
+      };
+      matic1 = defSystem {
+        vars = {
+          username = "suchir";
+          fullname = "Suchir Kavi";
+          email = "suchirkavi@gmail.com";
+        };
+        hostModule = ./hosts/matic1;
+      };
     };
   };
 }
