@@ -45,6 +45,7 @@
           arrterian.nix-env-selector
           github.copilot
           bazelbuild.vscode-bazel
+          github.github-vscode-theme
         ];
       };
     };
