@@ -1,8 +1,8 @@
 {vars, ...}: {
   imports = [
-    ./core
-    ./gui
-    ./tui
+    ../modules/core
+    ../modules/gui
+    ../modules/tui
   ];
 
   # Home Manager needs a bit of information about you and the

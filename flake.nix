@@ -18,46 +18,25 @@
   outputs = {
     self,
     nixpkgs,
-    home-manager,
     rust-overlay,
     ...
   } @ inputs: {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     nixosConfigurations = let
-      commonModules = [
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-        }
-        {
-          nixpkgs.overlays = [rust-overlay.overlays.default];
-        }
-      ];
+      commonModules = [{nixpkgs.overlays = [rust-overlay.overlays.default];}];
       defSystem = {
+        system,
         vars,
         hostModule,
-      }: let
-        specialArgs = {
-          inherit inputs;
-          inherit vars;
-        };
-      in
+      }:
         nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules =
-            [
-              hostModule
-              {
-                home-manager.extraSpecialArgs = specialArgs;
-                home-manager.users.${vars.username} = import ./home;
-              }
-            ]
-            ++ commonModules;
-          inherit specialArgs;
+          inherit system;
+          modules = [hostModule] ++ commonModules;
+          specialArgs = {inherit inputs vars;};
         };
     in {
       lovelace = defSystem {
+        system = "x86_64-linux";
         vars = {
           username = "soooch";
           fullname = "Suchir Kavi";
@@ -66,6 +45,7 @@
         hostModule = ./hosts/lovelace;
       };
       matic1 = defSystem {
+        system = "x86_64-linux";
         vars = {
           username = "suchir";
           fullname = "Suchir Kavi";

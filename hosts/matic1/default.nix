@@ -1,5 +1,6 @@
 {
   imports = [
+    ../../modules/home-manager/default.nix
     ../../modules/system.nix
     ../../modules/desktop/gnome/default.nix
     ../../modules/gpu/nvidia.nix
