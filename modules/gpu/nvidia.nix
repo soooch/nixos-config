@@ -21,5 +21,6 @@
     powerManagement.enable = true;
   };
 
-  virtualisation.docker.enableNvidia = true;
+  hardware.nvidia-container-toolkit.enable = true;
+  environment.systemPackages = [pkgs.nvidia-container-toolkit];
 }
