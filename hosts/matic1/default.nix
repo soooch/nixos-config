@@ -6,6 +6,7 @@
     ../../modules/ssd.nix
     ../../modules/logitech.nix
     ../../modules/docker.nix
+    ../../modules/zram.nix
     ./hardware-configuration.nix
   ];
 
