@@ -14,7 +14,10 @@
 
   services.xserver.videoDrivers = ["nvidia"];
 
-  boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
+  boot.kernelParams = [
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
+  ];
 
   hardware.nvidia = {
     open = true;
