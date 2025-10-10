@@ -14,6 +14,9 @@
           src = pkgs.fishPlugins.fzf-fish.src;
         }
       ];
+      shellAliases = {
+        sshx = "TERM=xterm-256color ssh";
+      };
     };
   };
 }
