@@ -30,11 +30,7 @@
     (python3.withPackages (p: with p; [numpy pandas torch]))
 
     # Rust
-    (rust-bin.selectLatestNightlyWith
-      (toolchain:
-        toolchain.default.override {
-          extensions = ["rust-src" "miri"];
-        }))
+    rust-bin.stable.latest.complete
 
     # Bazel
     buildifier
