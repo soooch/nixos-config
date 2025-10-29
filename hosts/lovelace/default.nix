@@ -15,12 +15,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # https://github.com/NixOS/nixos-hardware/blob/master/gigabyte/b650/b650-fix-suspend.nix
-  # see https://bbs.archlinux.org/viewtopic.php?pid=2227023
-  boot.kernelParams = [
-    "acpi_osi=\"!Windows 2015\""
-  ];
-
   # disable disabling amdgpu (using amd gpu)
   # # disable integrated amd gpu (interfering with nvidia)
   # boot.kernelParams = ["module_blacklist=amdgpu"];
