@@ -46,6 +46,7 @@
           github.copilot
           bazelbuild.vscode-bazel
           github.github-vscode-theme
+          ms-python.python
         ];
       };
     };
