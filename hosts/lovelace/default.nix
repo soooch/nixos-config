@@ -3,7 +3,7 @@
     ../../modules/home-manager/default.nix
     ../../modules/system.nix
     ../../modules/desktop/gnome/default.nix
-    ../../modules/gpu/amd/default.nix
+    ../../modules/gpu/nvidia.nix
     ../../modules/ssd.nix
     ../../modules/logitech.nix
     ../../modules/docker.nix
@@ -15,9 +15,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # disable disabling amdgpu (using amd gpu)
-  # # disable integrated amd gpu (interfering with nvidia)
-  # boot.kernelParams = ["module_blacklist=amdgpu"];
+  # disable integrated amd gpu (interfering with nvidia)
+  boot.kernelParams = ["module_blacklist=amdgpu"];
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
