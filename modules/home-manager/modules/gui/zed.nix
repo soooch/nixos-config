@@ -23,7 +23,7 @@
         nil = {
           initialization_options = {
             formatting = {
-              command = ["alejandra"];
+              command = [(lib.getExe pkgs.alejandra)];
             };
           };
         };
