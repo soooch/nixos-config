@@ -11,6 +11,9 @@
     fd
     wl-clipboard
 
+    # System
+    htop
+
     # Audio
     easyeffects
     helvum
