@@ -1,11 +1,8 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    alejandra
-    nil
-    # can't seem to get this one to work for options.
-    nixd
-  ];
-
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs = {
     vscode = {
       enable = true;
@@ -16,15 +13,15 @@
           "editor.inlayHints.enabled" = "offUnlessPressed";
 
           "nix.enableLanguageServer" = true;
-          "nix.formatterPath" = "alejandra";
-          "nix.serverPath" = "nil";
+          "nix.formatterPath" = lib.getExe pkgs.alejandra;
+          "nix.serverPath" = lib.getExe pkgs.nil;
           "nix.serverSettings" = {
             "nil" = {
-              "formatting"."command" = ["alejandra"];
+              "formatting"."command" = [(lib.getExe pkgs.alejandra)];
               "nix"."flake"."autoEvalInputs" = true;
             };
             "nixd" = {
-              "formatting"."command" = "alejandra";
+              "formatting"."command" = lib.getExe pkgs.alejandra;
             };
           };
 

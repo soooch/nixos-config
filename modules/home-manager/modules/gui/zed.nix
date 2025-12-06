@@ -3,9 +3,6 @@
   lib,
   ...
 }: {
-  # packages mentioned in our zed config
-  home.packages = with pkgs; [alejandra nodejs pkgs.rust-bin.stable.latest.rust-analyzer];
-
   programs.zed-editor = {
     enable = true;
 
@@ -23,7 +20,7 @@
         nil = {
           initialization_options = {
             formatting = {
-              command = ["alejandra"];
+              command = [(lib.getExe pkgs.alejandra)];
             };
           };
         };
