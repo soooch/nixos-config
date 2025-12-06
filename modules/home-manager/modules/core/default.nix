@@ -25,6 +25,7 @@
     alejandra
     cachix
     deadnix
+    nix-output-monitor
     statix
 
     # Python
