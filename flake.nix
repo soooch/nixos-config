@@ -7,6 +7,7 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-utils.url = "github:numtide/flake-utils";
     nixvim = {
       url = "github:nix-community/nixvim/nixos-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,41 +19,47 @@
   outputs = {
     self,
     nixpkgs,
+    flake-utils,
     rust-overlay,
     ...
-  } @ inputs: {
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-    nixosConfigurations = let
-      commonModules = [{nixpkgs.overlays = [rust-overlay.overlays.default];}];
-      defSystem = {
-        system,
-        vars,
-        hostModule,
-      }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [hostModule] ++ commonModules;
-          specialArgs = {inherit inputs vars;};
-        };
+  } @ inputs:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
     in {
-      lovelace = defSystem {
-        system = "x86_64-linux";
-        vars = {
-          username = "soooch";
-          fullname = "Suchir Kavi";
-          email = "suchirkavi@gmail.com";
+      formatter = pkgs.alejandra;
+    })
+    // {
+      nixosConfigurations = let
+        commonModules = [{nixpkgs.overlays = [rust-overlay.overlays.default];}];
+        defSystem = {
+          system,
+          vars,
+          hostModule,
+        }:
+          nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [hostModule] ++ commonModules;
+            specialArgs = {inherit inputs vars;};
+          };
+      in {
+        lovelace = defSystem {
+          system = "x86_64-linux";
+          vars = {
+            username = "soooch";
+            fullname = "Suchir Kavi";
+            email = "suchirkavi@gmail.com";
+          };
+          hostModule = ./hosts/lovelace;
         };
-        hostModule = ./hosts/lovelace;
-      };
-      matic1 = defSystem {
-        system = "x86_64-linux";
-        vars = {
-          username = "suchir";
-          fullname = "Suchir Kavi";
-          email = "suchirkavi@gmail.com";
+        matic1 = defSystem {
+          system = "x86_64-linux";
+          vars = {
+            username = "suchir";
+            fullname = "Suchir Kavi";
+            email = "suchirkavi@gmail.com";
+          };
+          hostModule = ./hosts/matic1;
         };
-        hostModule = ./hosts/matic1;
       };
     };
-  };
 }
