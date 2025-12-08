@@ -48,6 +48,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # only supports channels
+  programs.command-not-found.enable = false;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
