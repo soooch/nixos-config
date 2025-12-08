@@ -2,11 +2,16 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   programs.zed-editor = {
     enable = true;
 
-    extensions = ["nix" "toml" "make"];
+    extensions = [
+      "nix"
+      "toml"
+      "make"
+    ];
 
     userSettings = {
       vim_mode = true;
@@ -20,7 +25,7 @@
         nil = {
           initialization_options = {
             formatting = {
-              command = [(lib.getExe pkgs.nixfmt-rfc-style)];
+              command = [ (lib.getExe pkgs.nixfmt-rfc-style) ];
             };
           };
         };

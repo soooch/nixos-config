@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./direnv.nix
     ./fzf.nix
@@ -32,7 +33,13 @@
     statix
 
     # Python
-    (python3.withPackages (p: with p; [numpy pandas torch]))
+    (python3.withPackages (
+      p: with p; [
+        numpy
+        pandas
+        torch
+      ]
+    ))
 
     # Rust
     rust-bin.stable.latest.complete

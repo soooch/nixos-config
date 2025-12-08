@@ -2,12 +2,16 @@
   pkgs,
   vars,
   ...
-}: {
+}:
+{
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${vars.username} = {
     isNormalUser = true;
     description = vars.fullname;
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.fish;
     # we've added fish to environment.shells below.
     ignoreShellProgramCheck = true;
@@ -29,8 +33,14 @@
   };
 
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
-    trusted-users = ["root" vars.username];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [
+      "root"
+      vars.username
+    ];
   };
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -44,7 +54,10 @@
     wget
   ];
 
-  environment.shells = with pkgs; [nushell fish];
+  environment.shells = with pkgs; [
+    nushell
+    fish
+  ];
 
   programs.nano.enable = false;
 

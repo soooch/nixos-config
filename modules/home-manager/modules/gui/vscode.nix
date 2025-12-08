@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   programs = {
     vscode = {
       enable = true;
@@ -17,7 +18,7 @@
           "nix.serverPath" = lib.getExe pkgs.nil;
           "nix.serverSettings" = {
             "nil" = {
-              "formatting"."command" = [(lib.getExe pkgs.nixfmt-rfc-style)];
+              "formatting"."command" = [ (lib.getExe pkgs.nixfmt-rfc-style) ];
               "nix"."flake"."autoEvalInputs" = true;
             };
             "nixd" = {

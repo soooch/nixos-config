@@ -1,4 +1,5 @@
-{vars, ...}: {
+{ vars, ... }:
+{
   imports = [
     ../modules/core
     ../modules/gui
