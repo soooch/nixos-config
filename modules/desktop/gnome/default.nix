@@ -1,15 +1,10 @@
 { pkgs, ... }:
 {
+  # https://wiki.nixos.org/wiki/Wayland#Electron_and_Chromium
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  # List services that you want to enable:
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   environment.gnome.excludePackages = [ pkgs.gnome-console ];
   environment.systemPackages =

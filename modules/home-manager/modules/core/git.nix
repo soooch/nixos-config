@@ -4,13 +4,13 @@
     git = {
       enable = true;
 
-      userName = vars.fullname;
-      userEmail = vars.email;
+      settings = {
+        user = {
+          name = vars.fullname;
+          email = vars.email;
+        };
 
-      difftastic.enable = true;
-
-      # https://blog.gitbutler.com/how-git-core-devs-configure-git
-      extraConfig = {
+        # https://blog.gitbutler.com/how-git-core-devs-configure-git
         column.ui = "auto";
         branch.sort = "-committerdate";
         tag.sort = "version:refname";
@@ -33,6 +33,11 @@
         merge.conflictstyle = "zdiff3";
         pull.rebase = "true";
       };
+    };
+
+    difftastic = {
+      enable = true;
+      git.enable = true;
     };
   };
 }

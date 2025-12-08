@@ -1,4 +1,4 @@
-From fcdd1657b10de0f2af31d849a57a9f568c983e86 Mon Sep 17 00:00:00 2001
+From d2661e3572f220df8ab96aa41592e88bf0fe8d62 Mon Sep 17 00:00:00 2001
 From: Suchir Kavi <suchirkavi@gmail.com>
 Date: Thu, 5 Dec 2024 01:48:20 -0800
 Subject: [PATCH] terminal: Add support for OSC52 writes
@@ -9,10 +9,10 @@ Subject: [PATCH] terminal: Add support for OSC52 writes
  2 files changed, 68 insertions(+), 1 deletion(-)
 
 diff --git a/src/vteinternal.hh b/src/vteinternal.hh
-index 051e78c8..8f7766be 100644
+index 25c4d294..ce2cefbe 100644
 --- a/src/vteinternal.hh
 +++ b/src/vteinternal.hh
-@@ -1797,6 +1797,9 @@ public:
+@@ -1787,6 +1787,9 @@ public:
          void vte_termprop(vte::parser::Sequence const& seq,
                            vte::parser::StringTokeniser::const_iterator& token,
                            vte::parser::StringTokeniser::const_iterator const& endtoken) noexcept;
@@ -23,18 +23,18 @@ index 051e78c8..8f7766be 100644
          void urxvt_extension(vte::parser::Sequence const& seq,
                               vte::parser::StringTokeniser::const_iterator& token,
 diff --git a/src/vteseq.cc b/src/vteseq.cc
-index 5539ed64..5b1867b9 100644
+index 8821d73d..1667c96a 100644
 --- a/src/vteseq.cc
 +++ b/src/vteseq.cc
-@@ -35,6 +35,7 @@
- #include "caps.hh"
- #include "debug.h"
+@@ -38,6 +38,7 @@
  #include "sgr.hh"
+ #include "base16.hh"
+ #include "xtermcap.hh"
 +#include "widget.hh"
  
  #define BEL_C0 "\007"
  #define ST_C0 _VTE_CAP_ST
-@@ -2258,6 +2259,66 @@ Terminal::collect_rect(vte::parser::Sequence const& seq,
+@@ -2285,6 +2286,66 @@ Terminal::collect_rect(vte::parser::Sequence const& seq,
          return rect;
  }
  
@@ -101,8 +101,8 @@ index 5539ed64..5b1867b9 100644
  /*
   * Command Handlers
   * This is the unofficial documentation of all the VTE_CMD_* definitions.
-@@ -7555,6 +7616,10 @@ Terminal::OSC(vte::parser::Sequence const& seq)
-                 urxvt_extension(seq, it, cend);
+@@ -7691,6 +7752,10 @@ try
+                 conemu_extension(seq, it, cend);
                  break;
  
 +        case VTE_OSC_XTERM_SET_XSELECTION:
@@ -112,7 +112,7 @@ index 5539ed64..5b1867b9 100644
          case VTE_OSC_XTERM_SET_ICON_TITLE:
          case VTE_OSC_XTERM_SET_XPROPERTY:
          case VTE_OSC_XTERM_SET_COLOR_MOUSE_CURSOR_FG:
-@@ -7565,7 +7630,6 @@ Terminal::OSC(vte::parser::Sequence const& seq)
+@@ -7701,7 +7766,6 @@ try
          case VTE_OSC_XTERM_SET_CURSOR_NAME:
          case VTE_OSC_XTERM_LOGFILE:
          case VTE_OSC_XTERM_SET_FONT:
@@ -121,5 +121,5 @@ index 5539ed64..5b1867b9 100644
          case VTE_OSC_XTERM_RESET_COLOR_MOUSE_CURSOR_FG:
          case VTE_OSC_XTERM_RESET_COLOR_MOUSE_CURSOR_BG:
 -- 
-2.47.2
+2.50.1
 
