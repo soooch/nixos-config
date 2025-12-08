@@ -13,15 +13,15 @@
           "editor.inlayHints.enabled" = "offUnlessPressed";
 
           "nix.enableLanguageServer" = true;
-          "nix.formatterPath" = lib.getExe pkgs.alejandra;
+          "nix.formatterPath" = lib.getExe pkgs.nixfmt-rfc-style;
           "nix.serverPath" = lib.getExe pkgs.nil;
           "nix.serverSettings" = {
             "nil" = {
-              "formatting"."command" = [(lib.getExe pkgs.alejandra)];
+              "formatting"."command" = [(lib.getExe pkgs.nixfmt-rfc-style)];
               "nix"."flake"."autoEvalInputs" = true;
             };
             "nixd" = {
-              "formatting"."command" = lib.getExe pkgs.alejandra;
+              "formatting"."command" = lib.getExe pkgs.nixfmt-rfc-style;
             };
           };
 

@@ -25,10 +25,10 @@
     lldb
 
     # Nix
-    alejandra
     cachix
     deadnix
     nix-output-monitor
+    nixfmt-rfc-style
     statix
 
     # Python

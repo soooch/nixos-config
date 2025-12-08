@@ -26,7 +26,7 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      formatter = pkgs.alejandra;
+      formatter = pkgs.nixfmt-tree;
     })
     // {
       nixosConfigurations = let
