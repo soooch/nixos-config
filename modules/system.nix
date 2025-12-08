@@ -32,15 +32,18 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    trusted-users = [
-      "root"
-      vars.username
-    ];
+  nix = {
+    channel.enable = false;
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        vars.username
+      ];
+    };
   };
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
