@@ -8,7 +8,6 @@
 
   home.packages = with pkgs; [
     # Utils
-    bat
     fd
     wl-clipboard
 

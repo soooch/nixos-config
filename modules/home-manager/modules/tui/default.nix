@@ -1,5 +1,6 @@
 {
   imports = [
+    ./bat.nix
     ./fish.nix
     ./ghostty.nix
     ./helix.nix
