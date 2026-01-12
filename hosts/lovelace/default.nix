@@ -8,6 +8,7 @@
     ../../modules/logitech.nix
     ../../modules/docker.nix
     ../../modules/ios.nix
+    ../../modules/droidcam.nix
     ./hardware-configuration.nix
   ];
 
