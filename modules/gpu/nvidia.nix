@@ -3,8 +3,20 @@
   ...
 }:
 {
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.nvidia.acceptLicense = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    nvidia.acceptLicense = true;
+    cudaSupport = true;
+  };
+
+  nix.settings = {
+    substituters = [
+      "https://cache.nixos-cuda.org"
+    ];
+    trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+    ];
+  };
 
   hardware.graphics = {
     enable = true;
@@ -25,5 +37,8 @@
   };
 
   hardware.nvidia-container-toolkit.enable = true;
-  environment.systemPackages = [ pkgs.nvidia-container-toolkit ];
+  environment.systemPackages = with pkgs; [
+    nvidia-container-toolkit
+    gpu-burn
+  ];
 }
