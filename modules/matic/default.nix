@@ -1,0 +1,3 @@
+{
+  imports = [ ./debug-dongle.nix ];
+}

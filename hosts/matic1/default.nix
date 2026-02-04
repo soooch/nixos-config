@@ -8,6 +8,7 @@
     ../../modules/logitech.nix
     ../../modules/docker.nix
     ../../modules/zram.nix
+    ../../modules/matic/default.nix
     ./hardware-configuration.nix
   ];
 
