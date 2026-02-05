@@ -9,6 +9,7 @@
     ../../modules/docker.nix
     ../../modules/ios.nix
     ../../modules/droidcam.nix
+    ../../modules/zram.nix
     ./hardware-configuration.nix
   ];
 
