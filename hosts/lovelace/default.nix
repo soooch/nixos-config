@@ -7,6 +7,7 @@
     ../../modules/ssd.nix
     ../../modules/logitech.nix
     ../../modules/docker.nix
+    ../../modules/tailscale.nix
     ../../modules/ios.nix
     ../../modules/droidcam.nix
     ../../modules/zram.nix
