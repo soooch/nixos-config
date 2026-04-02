@@ -10,6 +10,7 @@
     ../../modules/tailscale.nix
     ../../modules/ios.nix
     ../../modules/droidcam.nix
+    ../../modules/sunshine.nix
     ../../modules/zram.nix
     ./hardware-configuration.nix
   ];
