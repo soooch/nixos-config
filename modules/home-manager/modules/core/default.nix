@@ -15,8 +15,8 @@
     htop
 
     # Audio
+    crosspipe
     easyeffects
-    helvum
     pwvucontrol
 
     # C, C++
@@ -28,7 +28,7 @@
     cachix
     deadnix
     nix-output-monitor
-    nixfmt-rfc-style
+    nixfmt
     statix
 
     # Python
