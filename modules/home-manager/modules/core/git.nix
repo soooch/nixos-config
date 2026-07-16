@@ -1,13 +1,22 @@
-{ vars, ... }:
+{ pkgs, vars, ... }:
 {
   programs = {
     git = {
       enable = true;
 
+      package = pkgs.gitFull;
+
       settings = {
         user = {
           name = vars.fullname;
           email = vars.email;
+        };
+
+        sendemail = {
+          smtpserver = "smtp.gmail.com";
+          smtpuser = vars.email;
+          smtpencryption = "ssl";
+          smtpserverport = "465";
         };
 
         # https://blog.gitbutler.com/how-git-core-devs-configure-git
