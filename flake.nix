@@ -11,6 +11,7 @@
     nixvim.url = "github:nix-community/nixvim/nixos-26.05";
     ghostty.url = "github:ghostty-org/ghostty";
     rust-overlay.url = "github:oxalica/rust-overlay";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
   outputs =
@@ -64,6 +65,15 @@
               email = "suchirkavi@gmail.com";
             };
             hostModule = ./hosts/matic1;
+          };
+          matic-suchir-0 = defSystem {
+            system = "x86_64-linux";
+            vars = {
+              username = "suchir";
+              fullname = "Suchir Kavi";
+              email = "suchirkavi@gmail.com";
+            };
+            hostModule = ./hosts/matic-suchir-0;
           };
         };
     };
