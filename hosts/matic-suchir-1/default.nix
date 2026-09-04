@@ -24,7 +24,7 @@
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
-  networking.hostName = "matic1"; # Define your hostname.
+  networking.hostName = "matic-suchir-1"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

@@ -57,14 +57,14 @@
             };
             hostModule = ./hosts/lovelace;
           };
-          matic1 = defSystem {
+          matic-suchir-1 = defSystem {
             system = "x86_64-linux";
             vars = {
               username = "suchir";
               fullname = "Suchir Kavi";
               email = "suchirkavi@gmail.com";
             };
-            hostModule = ./hosts/matic1;
+            hostModule = ./hosts/matic-suchir-1;
           };
           matic-suchir-0 = defSystem {
             system = "x86_64-linux";
