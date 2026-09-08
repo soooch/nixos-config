@@ -1,0 +1,17 @@
+# Give a Matic bot's debug ethernet interface a recognizable name so the
+# NetworkManager profile and the matic-debug-ip helper can find it on any USB
+# port. Must sort before 80-net-setup-link.rules, or systemd's predictable
+# naming (enpXsYuZ...) takes precedence.
+#
+# 0525:a4a1 is the generic Linux USB ethernet gadget ID, so the manufacturer
+# string (the bot's Tegra USB controller) is required too; a Raspberry Pi or
+# other gadget board must not end up named matic_*. The kernel version in that
+# string changes with bot updates, hence the glob.
+#
+# Per-ifindex names, like the company's 61-matic-parallel-flash.rules, so
+# several bots can be attached at once. Interface names are capped at 15
+# characters; "matic_dbg" leaves six digits for the ifindex.
+#
+# The interface belongs to the bot (its Jetson exposes the gadget through the
+# dongle's hub), so it only exists while the bot is powered.
+SUBSYSTEM=="net", ACTION=="add", ATTRS{idVendor}=="0525", ATTRS{idProduct}=="a4a1", ATTRS{manufacturer}=="Linux * with tegra-xudc", NAME="matic_dbg$attr{ifindex}"

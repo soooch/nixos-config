@@ -1,3 +1,6 @@
 {
-  imports = [ ./debug-dongle.nix ];
+  imports = [
+    ./debug-dongle.nix
+    ./parallel-flash.nix
+  ];
 }
