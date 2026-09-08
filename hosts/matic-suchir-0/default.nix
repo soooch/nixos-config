@@ -11,6 +11,7 @@
     ../../modules/docker.nix
     ../../modules/tailscale.nix
     ../../modules/zram.nix
+    ../../modules/matic/default.nix
     ./hardware-configuration.nix
   ];
 
