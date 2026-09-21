@@ -3,7 +3,13 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ../../modules/home-manager/default.nix
-    ../../modules/system.nix
+    ../../modules/linux/user.nix
+    ../../modules/linux/kernel.nix
+    ../../modules/nixos-defaults.nix
+    ../../modules/nix.nix
+    ../../modules/locale.nix
+    ../../modules/environment.nix
+    ../../modules/cups.nix
     ../../modules/desktop/gnome/default.nix
     ../../modules/gpu/nvidia.nix
     ../../modules/ssd.nix

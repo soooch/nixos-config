@@ -34,7 +34,12 @@
     // {
       nixosConfigurations =
         let
-          commonModules = [ { nixpkgs.overlays = [ rust-overlay.overlays.default ]; } ];
+          commonModules = [
+            {
+              nixpkgs.overlays = [ rust-overlay.overlays.default ];
+              nixpkgs.config.allowUnfree = true;
+            }
+          ];
           defSystem =
             {
               system,
