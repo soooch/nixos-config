@@ -1,7 +1,9 @@
+{ pkgs, ... }:
 {
   programs = {
     google-chrome = {
-      enable = true;
+      # nixpkgs only packages Chrome for Linux; use the homebrew cask on Darwin.
+      enable = pkgs.stdenv.isLinux;
 
       # extensions not supported for proprietary google-chrome
       # extensions = [
