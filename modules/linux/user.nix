@@ -9,8 +9,5 @@
       "wheel"
     ];
     shell = pkgs.fish;
-    # fish is configured by home-manager rather than programs.fish; it is
-    # still listed in /etc/shells by modules/shells.nix.
-    ignoreShellProgramCheck = true;
   };
 }
