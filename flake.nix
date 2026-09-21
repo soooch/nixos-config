@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
     nixvim.url = "github:nix-community/nixvim/nixos-26.05";
     ghostty.url = "github:ghostty-org/ghostty";
@@ -18,10 +22,40 @@
     {
       self,
       nixpkgs,
+      nix-darwin,
       flake-utils,
       rust-overlay,
       ...
     }@inputs:
+    let
+      commonModules = [
+        {
+          nixpkgs.overlays = [ rust-overlay.overlays.default ];
+          nixpkgs.config.allowUnfree = true;
+        }
+      ];
+      defSystem =
+        {
+          system,
+          vars,
+          hostModule,
+        }:
+        let
+          mkSystem =
+            if (nixpkgs.lib.systems.elaborate system).isDarwin then
+              nix-darwin.lib.darwinSystem
+            else
+              nixpkgs.lib.nixosSystem;
+        in
+        mkSystem {
+          modules = [
+            hostModule
+            { nixpkgs.hostPlatform = system; }
+          ]
+          ++ commonModules;
+          specialArgs = { inherit inputs vars; };
+        };
+    in
     flake-utils.lib.eachDefaultSystem (
       system:
       let
@@ -32,54 +66,46 @@
       }
     )
     // {
-      nixosConfigurations =
-        let
-          commonModules = [
-            {
-              nixpkgs.overlays = [ rust-overlay.overlays.default ];
-              nixpkgs.config.allowUnfree = true;
-            }
-          ];
-          defSystem =
-            {
-              system,
-              vars,
-              hostModule,
-            }:
-            nixpkgs.lib.nixosSystem {
-              inherit system;
-              modules = [ hostModule ] ++ commonModules;
-              specialArgs = { inherit inputs vars; };
-            };
-        in
-        {
-          lovelace = defSystem {
-            system = "x86_64-linux";
-            vars = {
-              username = "soooch";
-              fullname = "Suchir Kavi";
-              email = "suchirkavi@gmail.com";
-            };
-            hostModule = ./hosts/lovelace;
+      darwinConfigurations = {
+        recall-suchir-0 = defSystem {
+          system = "aarch64-darwin";
+          vars = {
+            username = "suchir";
+            fullname = "Suchir Kavi";
+            email = "suchirkavi@gmail.com";
           };
-          matic-suchir-1 = defSystem {
-            system = "x86_64-linux";
-            vars = {
-              username = "suchir";
-              fullname = "Suchir Kavi";
-              email = "suchirkavi@gmail.com";
-            };
-            hostModule = ./hosts/matic-suchir-1;
-          };
-          matic-suchir-0 = defSystem {
-            system = "x86_64-linux";
-            vars = {
-              username = "suchir";
-              fullname = "Suchir Kavi";
-              email = "suchirkavi@gmail.com";
-            };
-            hostModule = ./hosts/matic-suchir-0;
-          };
+          hostModule = ./hosts/recall-suchir-0;
         };
+      };
+
+      nixosConfigurations = {
+        lovelace = defSystem {
+          system = "x86_64-linux";
+          vars = {
+            username = "soooch";
+            fullname = "Suchir Kavi";
+            email = "suchirkavi@gmail.com";
+          };
+          hostModule = ./hosts/lovelace;
+        };
+        matic-suchir-1 = defSystem {
+          system = "x86_64-linux";
+          vars = {
+            username = "suchir";
+            fullname = "Suchir Kavi";
+            email = "suchirkavi@gmail.com";
+          };
+          hostModule = ./hosts/matic-suchir-1;
+        };
+        matic-suchir-0 = defSystem {
+          system = "x86_64-linux";
+          vars = {
+            username = "suchir";
+            fullname = "Suchir Kavi";
+            email = "suchirkavi@gmail.com";
+          };
+          hostModule = ./hosts/matic-suchir-0;
+        };
+      };
     };
 }
