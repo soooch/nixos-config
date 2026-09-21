@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ../modules/core
@@ -19,6 +19,13 @@
     # changes in each release.
     stateVersion = "23.11";
   };
+
+  # Copy app bundles into ~/Applications/Home Manager Apps instead of
+  # symlinking them: Spotlight and Launchpad do not index symlinks into the
+  # store. This is home-manager's default from stateVersion 25.11 on; ours is
+  # older. Both options assert they are on Darwin, hence the gate.
+  targets.darwin.linkApps.enable = false;
+  targets.darwin.copyApps.enable = pkgs.stdenv.isDarwin;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
