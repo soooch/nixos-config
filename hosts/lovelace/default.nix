@@ -1,5 +1,7 @@
+{ inputs, ... }:
 {
   imports = [
+    inputs.home-manager.nixosModules.home-manager
     ../../modules/home-manager/default.nix
     ../../modules/system.nix
     ../../modules/desktop/gnome/default.nix
