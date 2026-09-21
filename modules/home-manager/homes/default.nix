@@ -1,4 +1,4 @@
-{ vars, ... }:
+{ ... }:
 {
   imports = [
     ../modules/core
@@ -6,12 +6,9 @@
     ../modules/tui
   ];
 
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
+  # home.username and home.homeDirectory come from users.users.<name> on
+  # the system side (NixOS and nix-darwin both), so they are not set here.
   home = {
-    username = vars.username;
-    homeDirectory = "/home/${vars.username}";
-
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards
