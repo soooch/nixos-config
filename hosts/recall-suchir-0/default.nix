@@ -4,7 +4,7 @@
     inputs.home-manager.darwinModules.home-manager
     ../../modules/home-manager/default.nix
     ../../modules/darwin/user.nix
-    ../../modules/nix.nix
+    ../../modules/determinate-nix.nix
     ../../modules/environment.nix
   ];
 
