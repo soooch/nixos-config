@@ -15,4 +15,9 @@
     nushell
     fish
   ];
+
+  # The system fish module owns /etc/fish/*, which is how a fish login shell
+  # gets the system environment (PATH with /run/current-system/sw/bin and
+  # friends). home-manager's fish module owns ~/.config/fish/* on top of it.
+  programs.fish.enable = true;
 }
