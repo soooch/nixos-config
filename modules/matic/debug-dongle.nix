@@ -9,7 +9,7 @@
 #
 # 62-matic-debug-dongle-name.rules is ours and names the bot's NIC
 # `matic_dbg<ifindex>`, which the profile and helper below rely on.
-{ pkgs, ... }:
+{ pkgs, vars, ... }:
 let
   ifaceGlob = "matic_dbg*";
   # FujiDebugConnector::IPV6_ADDR in rust/debug_conn_v3; identical on every bot.
@@ -42,21 +42,17 @@ in
   # a host key, so known_hosts can never be stable for this address. The link is
   # a USB cable to a device on the desk; skip host key checking for it, as the
   # matic repo's own tooling does (openssh KnownHosts::Accept everywhere).
-  home-manager.sharedModules = [
-    {
-      programs.ssh = {
-        enable = true;
-        # No home-manager "Host *" defaults; keep OpenSSH's own for everything else.
-        enableDefaultConfig = false;
-        settings."${botAddr}%*" = {
-          User = "root";
-          StrictHostKeyChecking = "no";
-          UserKnownHostsFile = "/dev/null";
-          LogLevel = "ERROR";
-        };
-      };
-    }
-  ];
+  home-manager.users.${vars.username}.programs.ssh = {
+    enable = true;
+    # No home-manager "Host *" defaults; keep OpenSSH's own for everything else.
+    enableDefaultConfig = false;
+    settings."${botAddr}%*" = {
+      User = "root";
+      StrictHostKeyChecking = "no";
+      UserKnownHostsFile = "/dev/null";
+      LogLevel = "ERROR";
+    };
+  };
 
   environment.systemPackages = [
     # Print the bot's link-local address scoped to its debug interface, e.g.
