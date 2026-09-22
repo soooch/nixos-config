@@ -3,6 +3,7 @@
   imports = [
     ./direnv.nix
     ./fzf.nix
+    ./gh.nix
     ./git.nix
   ];
 
