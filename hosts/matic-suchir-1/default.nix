@@ -15,7 +15,7 @@
     ../../modules/ssd.nix
     ../../modules/logitech.nix
     ../../modules/docker.nix
-    ../../modules/tailscale.nix
+    ../../modules/tailscale/nixos.nix
     ../../modules/zram.nix
     ../../modules/matic/default.nix
     ./hardware-configuration.nix
