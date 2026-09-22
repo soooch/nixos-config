@@ -15,7 +15,7 @@
     ../../modules/ssd.nix
     ../../modules/logitech.nix
     ../../modules/docker.nix
-    ../../modules/tailscale.nix
+    ../../modules/tailscale/nixos.nix
     ../../modules/ios.nix
     ../../modules/droidcam.nix
     ../../modules/sunshine.nix
