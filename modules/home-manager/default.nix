@@ -4,9 +4,10 @@
   ...
 }:
 {
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-
-  home-manager.extraSpecialArgs = { inherit inputs vars; };
-  home-manager.users.${vars.username} = import ./homes/default.nix;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs vars; };
+    users.${vars.username}.imports = [ ./homes/default.nix ];
+  };
 }

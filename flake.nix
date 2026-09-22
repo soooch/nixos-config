@@ -17,6 +17,11 @@
     ghostty.url = "github:ghostty-org/ghostty";
     rust-overlay.url = "github:oxalica/rust-overlay";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    # Private data (e.g. Recall's AWS account table), fetched over ssh.
+    nixos-config-private = {
+      url = "git+ssh://git@github.com/soooch/nixos-config-private.git";
+      flake = false;
+    };
   };
 
   outputs =

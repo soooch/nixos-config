@@ -278,6 +278,22 @@
         "type": "github"
       }
     },
+    "nixos-config-private": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790115888,
+        "narHash": "sha256-7mHrwZU24bsxtLmpB4Ip4tuVs1mgk34ke7b254XPUNs=",
+        "ref": "refs/heads/main",
+        "rev": "1786412a60023d87580fb2cbed9133d1dadee4c7",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/soooch/nixos-config-private.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/soooch/nixos-config-private.git"
+      }
+    },
     "nixos-hardware": {
       "inputs": {
         "nixpkgs": "nixpkgs_4"
@@ -458,6 +474,7 @@
         "ghostty": "ghostty",
         "home-manager": "home-manager_2",
         "nix-darwin": "nix-darwin",
+        "nixos-config-private": "nixos-config-private",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_5",
         "nixvim": "nixvim",
