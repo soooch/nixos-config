@@ -45,6 +45,13 @@
           bazelbuild.vscode-bazel
           github.github-vscode-theme
           ms-python.python
+          # TODO: only really for recall, but there is only a single extension
+          # list for now.
+          coder.coder-remote
+          # Remote - SSH and the extensions its pack installs alongside it.
+          ms-vscode-remote.remote-ssh
+          ms-vscode-remote.remote-ssh-edit
+          ms-vscode.remote-explorer
         ];
       };
     };
