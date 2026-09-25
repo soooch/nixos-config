@@ -11,9 +11,17 @@
     ../../modules/tailscale/nix-darwin.nix
   ];
 
-  home-manager.users.${vars.username}.imports = [
-    ../../modules/home-manager/modules/recall/aws.nix
-  ];
+  home-manager.users.${vars.username} = {
+    imports = [
+      ../../modules/home-manager/modules/docker.nix
+      ../../modules/home-manager/modules/recall/aws.nix
+    ];
+
+    services.colima.profiles.default.settings = {
+      cpu = 6;
+      memory = 16;
+    };
+  };
 
   time.timeZone = "America/Los_Angeles";
 
